@@ -12,7 +12,7 @@ interface IHomeProps {
 export const Header: React.FC<IHomeProps> = ({ className }) => {
   return (
     <header className={cn("border border-button", className)}>
-      <Container className="flex justify-between items-center py-8 px-4">
+      <Container className="flex justify-between items-center py-8">
         <div className="flex items-center gap-4">
           <Image src="/logo.png" alt="logo" width={35} height={35} />
           <div>

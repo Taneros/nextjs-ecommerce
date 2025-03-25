@@ -6,5 +6,5 @@ interface IContainerProps {
 }
 
 export const Container: React.FC<React.PropsWithChildren<IContainerProps>> = ({ className, children }) => {
-  return <div className={cn('mx-auto max-w-[1280px]', className)}>{children}</div>;
+  return <div className={cn('mx-auto max-w-[1280px] px-4', className)}>{children}</div>;
 };
