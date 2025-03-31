@@ -1,6 +1,6 @@
-'use client";';
+'use client'
 
-import React from "react";
+import React, { useState } from "react";
 import {
   FilterCheckbox,
   IFilterCheckboxProps,
@@ -30,6 +30,17 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
   onChange,
   defaultValue,
 }) => {
+  const [checkedItems, setCheckedItems] = useState<string[]>(defaultValue || []);
+
+  const handleCheckedChange = (value: string) => {
+    const newCheckedItems = checkedItems.includes(value)
+      ? checkedItems.filter((item) => item !== value)
+      : [...checkedItems, value];
+
+    setCheckedItems(newCheckedItems);
+    onChange?.(newCheckedItems);
+  };
+
   return (
     <div className={className}>
       <p className="font-bold mb-3">{title}</p>
@@ -48,8 +59,8 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
             label={item.label}
             value={item.value}
             endAdornment={item.endAdornment}
-            checked={false}
-            onCheckedChange={(ids) => console.log(ids)}
+            checked={checkedItems.includes(item.value)}
+            onCheckedChange={() => handleCheckedChange(item.value)}
           />
         ))}
       </div>
