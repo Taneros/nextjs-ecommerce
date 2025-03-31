@@ -1,7 +1,11 @@
+'use client";';
+
+import React from "react";
+import { CheckboxFilterGroup } from "@/components/shared/checkbox-filter-group";
 import { FilterCheckbox } from "@/components/shared/filter-checkbox";
+import { RangeSlider } from "@/components/shared/range-slider";
 import { Title } from "@/components/shared/title";
 import { Input } from "@/components/ui";
-import React from "react";
 
 interface IFiltersProps {
   className?: string;
@@ -35,7 +39,32 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
             className="w-1/2 px-4 py-2 border border-neutral-200 rounded-lg"
           />
         </div>
+        <RangeSlider min={0} max={10000} step={10} value={[0, 500]} />
       </div>
+
+      <CheckboxFilterGroup
+        title="Ингредиенты"
+        className="mb-5"
+        limit={6}
+        defaultItems={[
+          { label: "Пепперони", value: "1" },
+          { label: "Грибы", value: "2" },
+          { label: "Лук", value: "3" },
+          { label: "Сыр", value: "4" },
+          { label: "Бекон", value: "5" },
+          { label: "Оливки", value: "6" },
+        ]}
+        items={[
+          { label: "Пепперони", value: "1" },
+          { label: "Грибы", value: "2" },
+          { label: "Лук", value: "3" },
+          { label: "Сыр", value: "4" },
+          { label: "Бекон", value: "5" },
+          { label: "Оливки", value: "6" },
+        ]}
+        defaultValue={["1", "2"]}
+        searchInputPlaceholder="Поиск ингредиентов"
+      />
     </div>
   );
 };

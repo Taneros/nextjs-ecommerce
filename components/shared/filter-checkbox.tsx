@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 
-interface IFilterCheckboxProps {
+export interface IFilterCheckboxProps {
   label: string;
   value: string;
   endAdornment?: React.ReactNode;
