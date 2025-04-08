@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import {
@@ -30,7 +30,13 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
   onChange,
   defaultValue,
 }) => {
-  const [checkedItems, setCheckedItems] = useState<string[]>(defaultValue || []);
+  const [checkedItems, setCheckedItems] = useState<string[]>(
+    defaultValue || []
+  );
+
+  const [showAll, setShowAll] = useState(false);
+
+  const [searchValue, setSearchValue] = useState("");
 
   const handleCheckedChange = (value: string) => {
     const newCheckedItems = checkedItems.includes(value)
@@ -41,19 +47,33 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
     onChange?.(newCheckedItems);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
+  const itemList = showAll
+    ? items.filter((item) =>
+        item.label.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    : defaultItems?.slice(0, limit) || items.slice(0, limit);
+
   return (
     <div className={className}>
       <p className="font-bold mb-3">{title}</p>
 
-      <div className="mb-5">
-        <Input
-          placeholder={searchInputPlaceholder}
-          className="bg-gray-50 border-none"
-        />
-      </div>
+      {showAll && (
+        <div className="mb-5">
+          <Input
+            placeholder={searchInputPlaceholder}
+            className="bg-gray-50 border-none"
+            onChange={handleSearchChange}
+            value={searchValue}
+          />
+        </div>
+      )}
 
       <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
-        {items.map((item, index) => (
+        {itemList.map((item, index) => (
           <FilterCheckbox
             key={index}
             label={item.label}
@@ -64,6 +84,17 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
           />
         ))}
       </div>
+
+      {items.length > limit && (
+        <div className={showAll ? "border-t border-t-neutral-100 mt-4" : ""}>
+          <button
+            className="text-primary mt-3"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? "Скрыть" : "Показать все"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -53,6 +53,13 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
           { label: "Сыр", value: "4" },
           { label: "Бекон", value: "5" },
           { label: "Оливки", value: "6" },
+          { label: "Сосиски", value: "7" },
+          { label: "Курица", value: "8" },
+          { label: "Креветки", value: "9" },
+          { label: "Тунец", value: "10" },
+          { label: "Брокколи", value: "11" },
+          { label: "Шпинат", value: "12" },
+          { label: "Соленые огурчики", value: "13" },
         ]}
         items={[
           { label: "Пепперони", value: "1" },
@@ -61,6 +68,14 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
           { label: "Сыр", value: "4" },
           { label: "Бекон", value: "5" },
           { label: "Оливки", value: "6" },
+          { label: "Сосиски", value: "7" },
+          { label: "Курица", value: "8" },
+          { label: "Креветки", value: "9" },
+          { label: "Тунец", value: "10" },
+          { label: "Брокколи", value: "11" },
+          { label: "Шпинат", value: "12" },
+          { label: "Соленые огурчики", value: "13" },
+          
         ]}
         defaultValue={["1", "2"]}
         searchInputPlaceholder="Поиск ингредиентов"
