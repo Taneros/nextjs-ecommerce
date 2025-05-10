@@ -78,6 +78,67 @@ export default function Home() {
                 ]}
                 categoryId={1}
               />
+              <ProductsGroupList
+                title="Комбо"
+                productList={[
+                  {
+                    id: 1,
+                    name: "Чизбургер-пицца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif",
+                    items: [
+                      {
+                        price: 550,
+                      },
+                    ],
+                  },
+                  {
+                    id: 2,
+                    name: "Чизбургер-пицца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif",
+                    items: [
+                      {
+                        price: 550,
+                      },
+                    ],
+                  },
+                  {
+                    id: 3,
+                    name: "Чизбургер-пицца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif",
+                    items: [
+                      {
+                        price: 550,
+                      },
+                    ],
+                  },
+                  {
+                    id: 4,
+                    name: "Чизбургер-пицца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif",
+                    items: [
+                      {
+                        price: 550,
+                      },
+                    ],
+                  },
+                  {
+                    id: 5,
+                    name: "Чизбургер-пицца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif",
+                    items: [
+                      {
+                        price: 550,
+                      },
+                    ],
+                  },
+                ]}
+                categoryId={2}
+              />
             </div>
           </div>
         </div>
