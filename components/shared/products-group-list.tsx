@@ -41,7 +41,7 @@ export const ProductsGroupList: FC<IProductsGroupListProps> = ({
         categoryId
       );
     }
-  }, [title, categoryId, intersection?.isIntersecting]);
+  }, [title, categoryId, intersection?.isIntersecting, setActiveCategoryId]);
 
   return (
     <div className={className} id={title} ref={ref}>
