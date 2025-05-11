@@ -1,37 +1,47 @@
-import { cn } from "@/lib/utils";
-import React from "react";
+"use client";
 
-interface Props {
+import { cn } from "@/lib/utils";
+import { useCategoryStore } from "@/store/category";
+import React, { FC } from "react";
+
+interface CategoriesProps {
   className?: string;
 }
 
 const categoryList = [
-  "Пиццы",
-  "Комбо",
-  "Закуски",
-  "Коктейли",
-  "Кофе",
-  "Напитки",
-  "Десерты",
+  { id: 1, categoryName: "Пиццы" },
+  { id: 2, categoryName: "Комбо" },
+  { id: 3, categoryName: "Закуски" },
+  { id: 4, categoryName: "Коктейли" },
+  { id: 5, categoryName: "Кофе" },
+  { id: 6, categoryName: "Напитки" },
+  { id: 7, categoryName: "Десерты" },
 ];
 
-const activeCategory = 0;
+export const Categories: FC<CategoriesProps> = ({ className }) => {
+  const categoryActiveId = useCategoryStore((state) => state.activeId);
 
-export const Categories: React.FC<Props> = ({ className }) => {
   return (
     <div
       className={cn("inline-flex gap-1 bg-gray-50 p-1 rounded-2xl", className)}
     >
-      {categoryList.map((category, index) => (
+      {categoryList.map(({ categoryName, id }) => (
         <a
-          key={index}
+          key={id}
           className={cn(
             "flex items-center font-bold h-11 rounded-2xl px-5",
-            activeCategory === index &&
+            categoryActiveId === id &&
               "bg-white shadow-md shadow-gray-200 text-primary"
           )}
+          href={`/#${categoryName}`}
+          // onClick={(e) => {
+          //   e.preventDefault();
+          //   const targetId = `#${categoryName}`;
+          //   const targetElement = document.querySelector(targetId);
+          //   targetElement?.scrollIntoView({ behavior: "smooth" });
+          // }}
         >
-          <button>{category}</button>
+          <button>{categoryName}</button>
         </a>
       ))}
     </div>
