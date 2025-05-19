@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
@@ -13,7 +13,7 @@ model User {
   id Int @id @default(autoincrement())
 
   fullName String
-  email    String
+  email    String @unique
   password String
 
   createdAt DateTime @default(now())
@@ -25,6 +25,48 @@ model Product {
 
   name     String
   imageURL String
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  variant ProductVariant[]
+
+  ingredients Ingredient[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductVariant {
+  id Int @id @default(autoincrement())
+
+  price     Int
+  size      Int?
+  pizzaType Int?
+
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ingredient {
+  id Int @id @default(autoincrement())
+
+  name  String
+  price Int
+
+  imageUrl String
+
+  products Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
