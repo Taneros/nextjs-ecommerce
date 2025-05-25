@@ -4,8 +4,6 @@ import dotenv from "dotenv";
 // Load environment variables from .env file
 dotenv.config();
 
-console.log("POSTGRES_URL_NON_POOLING:", process.env.POSTGRES_URL_NON_POOLING);
-
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 export const prisma =
