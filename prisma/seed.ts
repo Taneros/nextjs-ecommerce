@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma/prisma-client";
+import { prisma } from "./prisma-client";
 import { hashSync } from 'bcrypt'
 
 async function up() {
@@ -20,6 +20,7 @@ async function up() {
       },
     ],
   });
+
 }
 
 async function down() {}
@@ -32,3 +33,13 @@ async function main() {
     console.error(error);
   }
 }
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
