@@ -34,12 +34,6 @@ export const ProductsGroupList: FC<IProductsGroupListProps> = ({
   useEffect(() => {
     if (intersection?.isIntersecting) {
       setActiveCategoryId(categoryId)
-
-      console.log(
-        `shared/products-group-list.tsx - line: 32 ->> `,
-        title,
-        categoryId
-      );
     }
   }, [title, categoryId, intersection?.isIntersecting, setActiveCategoryId]);
 
