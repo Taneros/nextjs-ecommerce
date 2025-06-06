@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { useClickAway } from "react-use";
 import { useRef } from "react";
 import Link from "next/link";
+import { Api } from "@/services/api-client";
 
 interface ISearchInputProps {
   className?: string;
@@ -13,12 +14,16 @@ interface ISearchInputProps {
 
 export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
   const [isFocused, setIsFocused] = useState(false);
-
+  const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef(null);
 
   useClickAway(searchRef, () => setIsFocused(false));
 
-  const handleClickSearchItem = () => {};
+  useEffect(() => {
+    if (searchInput.trim()) {
+      Api.products.search(searchInput);
+    }
+  }, [searchInput]);
 
   return (
     <>
@@ -41,6 +46,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
           type="text"
           placeholder="Найти пиццу..."
           onFocus={() => setIsFocused(true)}
+          onChange={(input) => setSearchInput(input.currentTarget.value)}
         />
 
         <div
@@ -49,7 +55,10 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
             isFocused && "visible opacity-100 top-12"
           )}
         >
-          <Link className="inline-flex w-full items-center gap-2 px-3 py-2 hover:bg-primary/10" href={"/product/1"}>
+          <Link
+            className="inline-flex w-full items-center gap-2 px-3 py-2 hover:bg-primary/10"
+            href={"/product/1"}
+          >
             <img
               className="rounded-sm h-8 w-8"
               src="https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif"
