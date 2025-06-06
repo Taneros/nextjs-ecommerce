@@ -6,29 +6,32 @@ export function useProductSearch(query: string) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const trimmedQuery = query.trim();
+
   useEffect(() => {
-    if (!query.trim()) {
+    if (!trimmedQuery) {
       setProducts([]);
+      setLoading(false);
       return;
     }
-
     setLoading(true);
-  }, [query]);
+  }, [trimmedQuery]);
 
   useDebounce(
     () => {
-      if (!query.trim()) {
+      if (!trimmedQuery) {
         setProducts([]);
+        setLoading(false);
         return;
       }
-
-      fetch(`/api/products/search?query=${encodeURIComponent(query)}`)
+      fetch(`/api/products/search?query=${encodeURIComponent(trimmedQuery)}`)
         .then((res) => res.json())
         .then((data) => setProducts(data))
+        .catch(() => setProducts([]))
         .finally(() => setLoading(false));
     },
     350,
-    [query]
+    [trimmedQuery]
   );
 
   return { products, loading };
