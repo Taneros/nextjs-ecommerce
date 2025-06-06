@@ -6,3 +6,4 @@ export { SortPopup } from "@/components/shared/sort-popup";
 export { TopBar } from "@/components/shared/top-bar";
 export { Filters } from "@/components/shared/filters";
 export { FilterCheckbox } from "@/components/shared/filter-checkbox";
+export { SearchInput } from "@/components/shared/search-input";
