@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { useClickAway } from "react-use";
-import { useRef } from "react";
 import Link from "next/link";
-import { Api } from "@/services/api-client";
+import { useProductSearch } from "@/hooks/useProductSearch";
 
 interface ISearchInputProps {
   className?: string;
@@ -19,11 +18,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
 
   useClickAway(searchRef, () => setIsFocused(false));
 
-  useEffect(() => {
-    if (searchInput.trim()) {
-      Api.products.search(searchInput);
-    }
-  }, [searchInput]);
+  const { products, loading } = useProductSearch(searchInput);
 
   return (
     <>
@@ -49,24 +44,33 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
           onChange={(input) => setSearchInput(input.currentTarget.value)}
         />
 
-        <div
-          className={cn(
-            "absolute  w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30",
-            isFocused && "visible opacity-100 top-12"
-          )}
-        >
-          <Link
-            className="inline-flex w-full items-center gap-2 px-3 py-2 hover:bg-primary/10"
-            href={"/product/1"}
+        {searchInput.trim().length > 0 && (
+          <div
+            className={cn(
+              "absolute  w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30",
+              isFocused && "visible opacity-100 top-12"
+            )}
           >
-            <img
-              className="rounded-sm h-8 w-8"
-              src="https://media.dodostatic.net/image/r:233x233/019591b13a1a724b90092c16d9b1c05a.avif"
-              alt="Пицца 1"
-            />
-            <span>Пицца 1</span>
-          </Link>
-        </div>
+            {loading && <div className="px-3 py-2">Загрузка...</div>}
+            {!loading && products.length === 0 && searchInput.trim() && (
+              <div className="px-3 py-2 text-gray-400">Ничего не найдено</div>
+            )}
+            {products.map((product) => (
+              <Link
+                key={product.id}
+                className="inline-flex w-full items-center gap-2 px-3 py-2 hover:bg-primary/10"
+                href={`/product/${product.id}`}
+              >
+                <img
+                  className="rounded-sm h-8 w-8"
+                  src={product.imageUrl}
+                  alt={product.name}
+                />
+                <span>{product.name}</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
