@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 
 export function useFilterIngredientList() {
   const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetchJson<Ingredient[]>(`/api/ingredients`)
       .then((data) => setIngredientList(data))
-      .catch(() => setIngredientList([]));
+      .catch(() => setIngredientList([]))
+      .finally(() => setLoading(false));
   }, []);
 
-  return { ingredientList };
+  return { ingredientList, loading };
 }

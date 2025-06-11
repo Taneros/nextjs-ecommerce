@@ -1,19 +1,24 @@
-'use client";';
+"use client";
 
-import React from "react";
+import { FC } from "react";
 import { CheckboxFilterGroup } from "@/components/shared/checkbox-filter-group";
 import { FilterCheckbox } from "@/components/shared/filter-checkbox";
 import { RangeSlider } from "@/components/shared/range-slider";
 import { Title } from "@/components/shared/title";
 import { Input } from "@/components/ui";
+import { useFilterIngredientList } from "@/hooks/useFilterIngredientList";
 
 interface IFiltersProps {
   className?: string;
 }
 
-export const Filters: React.FC<IFiltersProps> = ({ className }) => {
+export const Filters: FC<IFiltersProps> = ({ className }) => {
+  const { ingredientList, loading } = useFilterIngredientList();
 
-  
+  const allIngredientList = ingredientList.map(({ name, id }) => ({
+    value: id.toString(),
+    label: name,
+  }));
 
   return (
     <div className={className}>
@@ -49,39 +54,11 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         title="Ингредиенты"
         className="mb-5"
         limit={6}
-        defaultItems={[
-          { label: "Пепперони", value: "1" },
-          { label: "Грибы", value: "2" },
-          { label: "Лук", value: "3" },
-          { label: "Сыр", value: "4" },
-          { label: "Бекон", value: "5" },
-          { label: "Оливки", value: "6" },
-          { label: "Сосиски", value: "7" },
-          { label: "Курица", value: "8" },
-          { label: "Креветки", value: "9" },
-          { label: "Тунец", value: "10" },
-          { label: "Брокколи", value: "11" },
-          { label: "Шпинат", value: "12" },
-          { label: "Соленые огурчики", value: "13" },
-        ]}
-        items={[
-          { label: "Пепперони", value: "1" },
-          { label: "Грибы", value: "2" },
-          { label: "Лук", value: "3" },
-          { label: "Сыр", value: "4" },
-          { label: "Бекон", value: "5" },
-          { label: "Оливки", value: "6" },
-          { label: "Сосиски", value: "7" },
-          { label: "Курица", value: "8" },
-          { label: "Креветки", value: "9" },
-          { label: "Тунец", value: "10" },
-          { label: "Брокколи", value: "11" },
-          { label: "Шпинат", value: "12" },
-          { label: "Соленые огурчики", value: "13" },
-          
-        ]}
+        defaultItems={allIngredientList.slice(0, 6)}
+        items={allIngredientList}
         defaultValue={["1", "2"]}
         searchInputPlaceholder="Поиск ингредиентов"
+        isLoading={loading}
       />
     </div>
   );

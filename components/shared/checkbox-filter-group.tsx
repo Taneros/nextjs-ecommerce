@@ -5,7 +5,7 @@ import {
   FilterCheckbox,
   IFilterCheckboxProps,
 } from "@/components/shared/filter-checkbox";
-import { Input } from "@/components/ui";
+import { Input, Skeleton } from "@/components/ui";
 
 type TItem = IFilterCheckboxProps;
 
@@ -18,6 +18,7 @@ interface ICheckboxFilterGroupProps {
   searchInputPlaceholder?: string;
   onChange?: (selectedItems: string[]) => void;
   defaultValue?: string[];
+  isLoading: boolean;
 }
 
 export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
@@ -29,6 +30,7 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
   searchInputPlaceholder = "Поиск...",
   onChange,
   defaultValue,
+  isLoading,
 }) => {
   const [checkedItems, setCheckedItems] = useState<string[]>(
     defaultValue || []
@@ -44,6 +46,7 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
       : [...checkedItems, value];
 
     setCheckedItems(newCheckedItems);
+    setSearchValue("")
     onChange?.(newCheckedItems);
   };
 
@@ -56,6 +59,17 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
         item.label.toLowerCase().includes(searchValue.toLowerCase())
       )
     : defaultItems?.slice(0, limit) || items.slice(0, limit);
+
+  if (isLoading) {
+    return (
+      <div className={className}>
+        <p className="font-bold mb-3">{title}</p>
+        {Array.from({ length: limit }).map((_, index) => (
+          <Skeleton key={index} className="h-6 mb-5 rounded-[8px]" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className={className}>
