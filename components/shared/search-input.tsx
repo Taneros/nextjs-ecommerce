@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, FC } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { useClickAway } from "react-use";
@@ -11,12 +12,18 @@ interface ISearchInputProps {
   className?: string;
 }
 
-export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
+export const SearchInput: FC<ISearchInputProps> = ({ className }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef(null);
+  const pathname = usePathname();
 
   useClickAway(searchRef, () => setIsFocused(false));
+
+  useEffect(() => {
+    setSearchInput("");
+    setIsFocused(false);
+  }, [pathname]);
 
   const { products, loading } = useProductSearch(searchInput);
 
@@ -40,6 +47,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
           className="rounded-2xl outline-none w-full bg-gray-100 pl-11"
           type="text"
           placeholder="Найти пиццу..."
+          value={searchInput}
           onFocus={() => setIsFocused(true)}
           onChange={(input) => setSearchInput(input.currentTarget.value)}
         />
@@ -60,6 +68,10 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
                 key={product.id}
                 className="inline-flex w-full items-center gap-2 px-3 py-2 hover:bg-primary/10"
                 href={`/product/${product.id}`}
+                onClick={() => {
+                  setSearchInput("");
+                  setIsFocused(false);
+                }}
               >
                 <img
                   className="rounded-sm h-8 w-8"
