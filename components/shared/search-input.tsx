@@ -25,7 +25,7 @@ export const SearchInput: FC<ISearchInputProps> = ({ className }) => {
     setIsFocused(false);
   }, [pathname]);
 
-  const { products, loading } = useProductSearch(searchInput);
+  const { productList, loading } = useProductSearch(searchInput);
 
   return (
     <>
@@ -60,10 +60,10 @@ export const SearchInput: FC<ISearchInputProps> = ({ className }) => {
             )}
           >
             {loading && <div className="px-3 py-2">Загрузка...</div>}
-            {!loading && products.length === 0 && searchInput.trim() && (
+            {!loading && productList.length === 0 && searchInput.trim() && (
               <div className="px-3 py-2 text-gray-400">Ничего не найдено</div>
             )}
-            {products.map((product) => (
+            {productList.map((product) => (
               <Link
                 key={product.id}
                 className="inline-flex w-full items-center gap-2 px-3 py-2 hover:bg-primary/10"

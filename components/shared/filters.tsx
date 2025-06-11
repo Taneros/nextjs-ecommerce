@@ -12,6 +12,9 @@ interface IFiltersProps {
 }
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
+
+  
+
   return (
     <div className={className}>
       <Title text="Фильтры" size="sm" className="mb-5 font-bold" />
