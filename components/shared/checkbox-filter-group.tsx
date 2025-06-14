@@ -11,9 +11,9 @@ type TItem = IFilterCheckboxProps;
 
 interface ICheckboxFilterGroupProps {
   className?: string;
-  title: string;
+  title?: string;
   items: TItem[];
-  defaultItems: TItem[];
+  defaultItems?: TItem[];
   limit?: number;
   searchInputPlaceholder?: string;
   onClickCheckbox?: (selectedItems: string[]) => void;
@@ -73,7 +73,7 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
 
   return (
     <div className={className}>
-      <p className="font-bold mb-3">{title}</p>
+      {title && <p className="font-bold mb-3">{title}</p>}
 
       {showAll && (
         <div className="mb-5">
