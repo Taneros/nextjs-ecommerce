@@ -20,17 +20,18 @@ export const PriceFilter: FC<IPriceFilterProps> = ({
   onChange,
 }) => {
   const [range, setRange] = useState<[number, number]>(defaultRange);
-
   const [inputValues, setInputValues] = useState<[string, string]>([
     String(defaultRange[0]),
     String(defaultRange[1]),
   ]);
-
   const [fromEdited, setFromEdited] = useState(false);
 
   useEffect(() => {
     setRange(defaultRange);
-    setInputValues([String(defaultRange[0]), String(defaultRange[1])]);
+    setInputValues([
+      String(defaultRange[0]),
+      String(defaultRange[1]),
+    ]);
     setFromEdited(false);
   }, [defaultRange]);
 
@@ -43,13 +44,12 @@ export const PriceFilter: FC<IPriceFilterProps> = ({
       setInputValues(["", inputValues[1]]);
       return;
     }
-    const newInputs: [string, string] = [...inputValues] as [string, string];
+    const newInputs: [string, string] = [...inputValues];
     newInputs[index] = value;
     setInputValues(newInputs);
-    const num = Number(value);
-    if (!isNaN(num) && value !== "") {
+    if (value !== "" && !isNaN(Number(value))) {
       const newRange: [number, number] = [...range];
-      newRange[index] = num;
+      newRange[index] = Number(value);
       if (index === 0) {
         newRange[0] = Math.max(min, Math.min(newRange[0], newRange[1], max));
       } else {
@@ -71,19 +71,21 @@ export const PriceFilter: FC<IPriceFilterProps> = ({
       newRange[1] = Math.min(max, Math.max(newRange[1], newRange[0], min));
     }
     setRange(newRange);
-    setInputValues([String(newRange[0]), String(newRange[1])]);
+    setInputValues([
+      String(newRange[0]),
+      String(newRange[1])
+    ]);
     onChange?.(newRange);
-    if (index === 0 && inputValues[0] === "") {
-      setFromEdited(false);
-    }
+    if (index === 0 && inputValues[0] === "") setFromEdited(false);
   };
 
   const handleSliderChange = (values: number[]) => {
     setRange([values[0], values[1]]);
-    setInputValues([String(values[0]), String(values[1])]);
-    if (values[0] === 0) {
-      setFromEdited(false);
-    }
+    setInputValues([
+      String(values[0]),
+      String(values[1])
+    ]);
+    if (values[0] === 0) setFromEdited(false);
     onChange?.([values[0], values[1]]);
   };
 
