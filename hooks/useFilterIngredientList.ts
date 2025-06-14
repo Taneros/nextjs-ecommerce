@@ -2,7 +2,7 @@ import { fetchJson } from "@/hooks/helpers/fetchJson";
 import { Ingredient } from "@prisma/client";
 import { useEffect, useState } from "react";
 
-export function useFilterIngredientList() {
+export function useGetFilterIngredientList() {
   const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(false);
 

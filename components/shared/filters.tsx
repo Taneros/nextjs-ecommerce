@@ -6,14 +6,14 @@ import { FilterCheckbox } from "@/components/shared/filter-checkbox";
 import { RangeSlider } from "@/components/shared/range-slider";
 import { Title } from "@/components/shared/title";
 import { Input } from "@/components/ui";
-import { useFilterIngredientList } from "@/hooks/useFilterIngredientList";
+import { useGetFilterIngredientList } from "@/hooks/useFilterIngredientList";
 
 interface IFiltersProps {
   className?: string;
 }
 
 export const Filters: FC<IFiltersProps> = ({ className }) => {
-  const { ingredientList, loading } = useFilterIngredientList();
+  const { ingredientList, loading } = useGetFilterIngredientList();
 
   const allIngredientList = ingredientList.map(({ name, id }) => ({
     value: id.toString(),
@@ -59,6 +59,7 @@ export const Filters: FC<IFiltersProps> = ({ className }) => {
         defaultValue={["1", "2"]}
         searchInputPlaceholder="Поиск ингредиентов"
         isLoading={loading}
+        onClickCheckbox={(id) => console.log(`shared/filters.tsx - line: 62 ->> id`, id)}
       />
     </div>
   );

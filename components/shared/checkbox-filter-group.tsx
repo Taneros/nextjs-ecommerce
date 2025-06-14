@@ -16,7 +16,7 @@ interface ICheckboxFilterGroupProps {
   defaultItems: TItem[];
   limit?: number;
   searchInputPlaceholder?: string;
-  onChange?: (selectedItems: string[]) => void;
+  onClickCheckbox?: (selectedItems: string[]) => void;
   defaultValue?: string[];
   isLoading: boolean;
 }
@@ -28,7 +28,7 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
   defaultItems,
   limit = 5,
   searchInputPlaceholder = "Поиск...",
-  onChange,
+  onClickCheckbox,
   defaultValue,
   isLoading,
 }) => {
@@ -47,7 +47,7 @@ export const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
 
     setCheckedItems(newCheckedItems);
     setSearchValue("")
-    onChange?.(newCheckedItems);
+    onClickCheckbox?.(newCheckedItems);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
